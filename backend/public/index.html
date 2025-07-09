@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель управления и просмотра</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="app-container">
+    <aside class="sidebar">
+        <header class="sidebar-header">
+            <img src="timestop.svg" alt="Логотип" class="logo-icon">
+            <h1>Панель управления и просмотра</h1>
+        </header>
+
+        <section class="sidebar-section">
+            <h2>Просмотр</h2>
+            <nav class="sidebar-nav">
+
+                <button class="nav-button active" id="nav-accounts" data-view="accounts">Счета</button>
+                <button class="nav-button" data-view="customers">Клиенты</button>
+                <button class="nav-button" data-view="currencies">Валюты</button>
+                <button class="nav-button" data-view="exchange_rates">Курс валют</button>
+                <button class="nav-button" data-view="transactions">Операции</button>
+            </nav>
+        </section>
+        <section class="sidebar-section">
+            <h2>Действия</h2>
+            <!-- Кнопка "Данные" и "Сброс" заменены на новые -->
+            <button class="nav-button" id="nav-data">Данные</button>
+
+        </section>
+        <button class="reset-button" id="reset-selection">Сброс</button>
+    </aside>
+
+    <main class="main-content">
+        <div id="view-table">
+            <header class="content-header">
+                <h2 id="table-title"></h2>
+            </header>
+            <div class="table-container">
+                <table>
+                    <thead>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <footer class="content-footer-first">
+                <button class="action-button add-button" id="add-row-button">Добавить строку</button>
+                <div class="button-container" id="edit-and-delete">
+                    <button class="action-button edit-button" id="edit-row-button" disabled>Изменить строку</button>
+                    <button class="action-button delete-button" id="delete-row-button" disabled>Удалить строку</button>
+                </div>
+            </footer>
+        </div>
+
+        <div id="view-edit-form" class="hidden">
+            <header class="content-header">
+                <h2 id="form-title">
+                </h2>
+            </header>
+            <div class="edit-form-container" id="dynamic-form-fields">
+            </div>
+            <footer class="content-footer">
+                <button class="action-button cancel-button" id="cancel-button">Отмена</button>
+                <button class="action-button save-button" id="save-row-button">Сохранить</button>
+            </footer>
+        </div>
+    </main>
+</div>
+<script src="config.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

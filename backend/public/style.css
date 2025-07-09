@@ -1,0 +1,305 @@
+:root {
+    --bg-dark: #3a3a44;
+    --bg-panel: #4a4a56;
+    --bg-button: #5d5d6b;
+    --bg-button-hover: #707080;
+    --bg-active: #b5a5d6;
+    --bg-row-selected: #6e6e7c;
+    --text-light: #e0e0e0;
+    --text-dark: #333;
+    --color-pink-red: #cd5262;
+    --color-blue: #518dcf;
+    --border-color: #5a5a66;
+    --sidebar-bg: #444450;
+    --green-color: #4ac5a0;
+    --gray-color: #989ba1;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ИЗМЕНЕНО */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+}
+
+/* ИЗМЕНЕНО */
+.app-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--bg-panel);
+    overflow: hidden;
+}
+
+/* --- Боковая панель --- */
+.sidebar {
+    width: 280px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--sidebar-bg);
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.logo-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    position: relative;
+}
+
+
+.sidebar-header h1 {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.sidebar-section {
+    margin-bottom: 20px;
+}
+
+.sidebar-section h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #c0c0c0;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nav-button {
+    width: 100%;
+    padding: 12px 15px;
+    border: 3px;
+    background-color: var(--bg-button);
+    color: var(--text-light);
+    border-radius: 8px;
+    text-align: left;
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.nav-button:hover {
+    background-color: var(--bg-button-hover);
+}
+
+.nav-button.active {
+    background-color: var(--bg-active);
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.reset-button {
+    width: 100%;
+    margin-top: auto;
+    padding: 12px;
+    border: none;
+    background-color: var(--color-pink-red);
+    color: var(--text-light);
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s;
+
+}
+.reset-button:hover { opacity: 0.9 }
+
+
+
+/* --- Основной контент --- */
+.main-content {
+    flex-grow: 1;
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-header h2 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.sort-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+}
+
+.sort-button {
+    border: none;
+    background-color: transparent;
+    color: var(--text-light);
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.sort-button.active {
+    background-color: var(--bg-active);
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.table-container {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+.table-container::-webkit-scrollbar { width: 8px; }
+.table-container::-webkit-scrollbar-track { background: var(--sidebar-bg); }
+.table-container::-webkit-scrollbar-thumb { background: var(--bg-row-selected); border-radius: 10px; }
+.table-container::-webkit-scrollbar-thumb:hover { background: #888; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 14px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+thead th {
+    font-weight: 600;
+    color: #c0c0c0;
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-panel);
+}
+
+tbody tr {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+tbody tr:hover {
+    background-color: #555562;
+}
+
+tbody tr.selected {
+    background-color: var(--bg-row-selected);
+}
+
+.content-footer {
+    padding-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.action-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--text-light);
+    transition: opacity 0.2s, transform 0.1s;
+}
+.action-button:hover { opacity: 0.9; }
+.action-button:active { transform: scale(0.98); }
+.action-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.content-footer-first {
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.button-container {
+    display: flex;
+    gap: 15px;
+}
+
+.add-button { background-color: var(--green-color); }
+.edit-button { background-color: var(--color-blue); }
+.delete-button { background-color: var(--color-pink-red); }
+.cancel-button { background-color: var(--gray-color)}
+
+.hidden {
+    display: none !important;
+}
+
+/* Стили для формы редактирования */
+.edit-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex-grow: 1;
+    padding-top: 10px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-field label {
+    font-size: 0.9rem;
+    color: #c0c0c0;
+    font-weight: 500;
+}
+
+.form-field input {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: var(--bg-row-selected);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-light);
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.form-field input:focus {
+    outline: none;
+    border-color: var(--bg-active);
+}
+
+/* Новый цвет для кнопки "Сохранить" */
+:root {
+    /* ... другие переменные ... */
+    --color-green: #76b38f;
+}
+.save-button {
+    background-color: var(--color-green);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
