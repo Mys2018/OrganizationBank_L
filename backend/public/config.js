@@ -3,6 +3,7 @@ const appConfig = {
     accounts: {
         endpoint: 'accounts',
         primaryKey: 'account_number',
+        buildItemUrl: (baseUrl, endpoint, id) => `${baseUrl}/${endpoint}/${id}`,
         title: 'Счета',
         columns: [
             { key: 'account_number', label: 'Номер счета', type: 'number', readonly: true },
@@ -16,6 +17,7 @@ const appConfig = {
     customers: {
         endpoint: 'customers',
         primaryKey: 'passport_number',
+        buildItemUrl: (baseUrl, endpoint, id) => `${baseUrl}/${endpoint}/${id}`,
         title: 'Клиенты',
         columns: [
             { key: 'passport_number', label: 'Номер паспорта', type: 'text', readonly: true },
@@ -29,6 +31,7 @@ const appConfig = {
     currencies: {
         endpoint: 'currencies',
         primaryKey: 'currency',
+        buildItemUrl: (baseUrl, endpoint, id) => `${baseUrl}/${endpoint}/${id}`,
         title: 'Валюты',
         columns: [
             { key: 'currency', label: 'Валюта', type: 'text', readonly: true },
@@ -41,6 +44,7 @@ const appConfig = {
     transactions: {
         endpoint: 'transactions',
         primaryKey: 'transaction_id',
+        buildItemUrl: (baseUrl, endpoint, id) => `${baseUrl}/${endpoint}/${id}`,
         title: 'Операции',
         columns: [
             { key: 'transaction_id', label: 'Номер операции', type: 'text', readonly: true },
@@ -54,11 +58,17 @@ const appConfig = {
     // Курс валют
     exchange_rates: {
         endpoint: 'exchange_rates',
-        primaryKey: ['currency', 'rate_date'],
+        primaryKey: (item) => `${item.currency}_${item.rate_date}`,
         title: 'Курс валют',
+        buildItemUrl: (baseUrl, endpoint, id) => {
+            const [currency, rate_date_string] = id.split('_');
+            const dateObject = new Date(rate_date_string);
+            const formattedDate = dateObject.toISOString().split('T')[0];
+            return `${baseUrl}/${endpoint}?currency=${currency}&rate_date=${formattedDate}`;
+        },
         columns: [
             { key: 'currency', label: 'Валюта', type: 'text', readonly: true },
-            { key: 'rate_date', label: 'Дата', type: 'text', readonly: true},
+            { key: 'rate_date', label: 'Дата', type: 'date', readonly: true},
             { key: 'price', label: 'Цена в рублях', type: 'text'}
         ]
     }

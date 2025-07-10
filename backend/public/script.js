@@ -1,16 +1,12 @@
-// Файл: script.js (Финальная универсальная версия)
-
 document.addEventListener('DOMContentLoaded', () => {
     const apiBaseUrl = 'http://localhost:3000/api';
 
-    // --- Глобальное состояние ---
     let currentState = {
         config: null,
         selectedRowId: null,
         isEditing: false,
     };
 
-    // --- Элементы UI ---
     const viewTable = document.getElementById('view-table');
     const viewEditForm = document.getElementById('view-edit-form');
     const tableTitle = document.getElementById('table-title');
@@ -19,14 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const formTitle = document.getElementById('form-title');
     const formFieldsContainer = document.getElementById('dynamic-form-fields');
 
-    // Кнопки
     const addButton = document.getElementById('add-row-button');
     const editButton = document.getElementById('edit-row-button');
     const deleteButton = document.getElementById('delete-row-button');
     const saveButton = document.getElementById('save-row-button');
     const cancelButton = document.getElementById('cancel-button');
 
-    // --- ФУНКЦИИ ГЕНЕРАЦИИ UI ---
 
     function renderTable(config, data) {
         tableTitle.textContent = config.title;
@@ -43,7 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         data.forEach(item => {
             const row = document.createElement('tr');
-            row.dataset.id = item[config.primaryKey];
+            const pkValue = typeof config.primaryKey === 'function'
+                ? config.primaryKey(item)
+                : item[config.primaryKey];
+            row.dataset.id = pkValue;
 
             config.columns.forEach(col => {
                 const td = document.createElement('td');
@@ -84,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- УПРАВЛЕНИЕ ВИДАМИ ---
 
     function showTableView() {
         viewEditForm.classList.add('hidden');
@@ -99,7 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isEditing) {
             if (!currentState.selectedRowId) return;
             try {
-                const response = await fetch(`${apiBaseUrl}/${currentState.config.endpoint}/${currentState.selectedRowId}`);
+                const itemUrl = currentState.config.buildItemUrl(apiBaseUrl, currentState.config.endpoint, currentState.selectedRowId);
+                const response = await fetch(itemUrl);
+
                 if (!response.ok) throw new Error('Не удалось получить данные для редактирования.');
                 data = await response.json();
             } catch (error) {
@@ -114,7 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
         viewEditForm.classList.remove('hidden');
     }
 
-    // --- УПРАВЛЕНИЕ СОСТОЯНИЕМ ---
 
     async function switchView(viewName) {
         const config = appConfig[viewName];
@@ -146,7 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteButton.disabled = currentState.selectedRowId === null;
     }
 
-    // --- ОБРАБОТЧИКИ CRUD ---
 
     async function saveForm() {
         const config = currentState.config;
@@ -160,10 +156,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const url = currentState.isEditing
-            ? `${apiBaseUrl}/${config.endpoint}/${currentState.selectedRowId}`
+            ? currentState.config.buildItemUrl(apiBaseUrl, config.endpoint, currentState.selectedRowId)
             : `${apiBaseUrl}/${config.endpoint}`;
 
+
+
         const method = currentState.isEditing ? 'PUT' : 'POST';
+
+        console.log(`Отправка ${method} запроса на URL: ${url}`);
 
         try {
             const response = await fetch(url, {
@@ -189,7 +189,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!confirm(`Вы уверены, что хотите удалить запись с ID ${currentState.selectedRowId} из таблицы "${config.title}"?`)) return;
 
         try {
-            const response = await fetch(`${apiBaseUrl}/${config.endpoint}/${currentState.selectedRowId}`, { method: 'DELETE' });
+            const itemUrl = currentState.config.buildItemUrl(apiBaseUrl, currentState.config.endpoint, currentState.selectedRowId);
+            console.log('Отправка DELETE запроса на URL:', itemUrl);
+            const response = await fetch(itemUrl, { method: 'DELETE' });
             if (!response.ok) throw new Error(`Ошибка при удалении: ${response.statusText}`);
 
             const viewKey = Object.keys(appConfig).find(key => appConfig[key] === config);
@@ -200,7 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- НАЗНАЧЕНИЕ ОБРАБОТЧИКОВ ---
 
     document.querySelectorAll('.sidebar-nav .nav-button').forEach(button => {
         button.addEventListener('click', (e) => {
@@ -233,6 +234,5 @@ document.addEventListener('DOMContentLoaded', () => {
     saveButton.addEventListener('click', saveForm);
     cancelButton.addEventListener('click', showTableView);
 
-    // --- ИНИЦИАЛИЗАЦИЯ ---
     switchView('accounts'); // Загружаем "Счета" по умолчанию
 });

@@ -17,11 +17,14 @@
             <img src="timestop.svg" alt="Логотип" class="logo-icon">
             <h1>Панель управления и просмотра</h1>
         </header>
+        <section class="sidebar-section">
+            <h2>Главное</h2>
+            <button class="nav-button" id="nav-main">Начало</button>
+        </section>
 
         <section class="sidebar-section">
             <h2>Просмотр</h2>
             <nav class="sidebar-nav">
-
                 <button class="nav-button active" id="nav-accounts" data-view="accounts">Счета</button>
                 <button class="nav-button" data-view="customers">Клиенты</button>
                 <button class="nav-button" data-view="currencies">Валюты</button>
@@ -31,9 +34,7 @@
         </section>
         <section class="sidebar-section">
             <h2>Действия</h2>
-            <!-- Кнопка "Данные" и "Сброс" заменены на новые -->
             <button class="nav-button" id="nav-data">Данные</button>
-
         </section>
         <button class="reset-button" id="reset-selection">Сброс</button>
     </aside>
@@ -45,10 +46,8 @@
             </header>
             <div class="table-container">
                 <table>
-                    <thead>
-                    </thead>
-                    <tbody>
-                    </tbody>
+                    <thead></thead>
+                    <tbody></tbody>
                 </table>
             </div>
             <footer class="content-footer-first">
@@ -62,11 +61,9 @@
 
         <div id="view-edit-form" class="hidden">
             <header class="content-header">
-                <h2 id="form-title">
-                </h2>
+                <h2 id="form-title"></h2>
             </header>
-            <div class="edit-form-container" id="dynamic-form-fields">
-            </div>
+            <div class="edit-form-container" id="dynamic-form-fields"></div>
             <footer class="content-footer">
                 <button class="action-button cancel-button" id="cancel-button">Отмена</button>
                 <button class="action-button save-button" id="save-row-button">Сохранить</button>

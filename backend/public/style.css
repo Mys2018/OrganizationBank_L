@@ -3,7 +3,7 @@
     --bg-panel: #4a4a56;
     --bg-button: #5d5d6b;
     --bg-button-hover: #707080;
-    --bg-active: #b5a5d6;
+    --bg-active: #bcb8c5;
     --bg-row-selected: #6e6e7c;
     --text-light: #e0e0e0;
     --text-dark: #333;
@@ -11,8 +11,9 @@
     --color-blue: #518dcf;
     --border-color: #5a5a66;
     --sidebar-bg: #444450;
-    --green-color: #4ac5a0;
+    --green-color: #29a883;
     --gray-color: #989ba1;
+    --scrollbar-width: 12px;
 }
 
 * {
@@ -21,23 +22,50 @@
     padding: 0;
 }
 
-/* ИЗМЕНЕНО */
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: var(--bg-dark);
     color: var(--text-light);
 }
 
-/* ИЗМЕНЕНО */
 .app-container {
     display: flex;
     width: 100%;
     height: 100vh;
-    background-color: var(--bg-panel);
+    background: linear-gradient(180deg, var(--bg-dark) 0%, rgb(55, 61, 80) 100%);
     overflow: hidden;
 }
 
-/* --- Боковая панель --- */
+#view-table, #view-edit-form {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.content-header {
+    flex-shrink: 0;
+}
+
+.table-container {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.content-footer, .content-footer-first {
+    flex-shrink: 0;
+    padding-top: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+.content-footer-first {
+    justify-content: space-between;
+}
+.content-footer {
+    justify-content: flex-end;
+}
+
 .sidebar {
     width: 280px;
     padding: 20px;
@@ -85,16 +113,19 @@ body {
 .nav-button {
     width: 100%;
     padding: 12px 15px;
-    border: 3px;
+    border: 15px;
     background-color: var(--bg-button);
+    border-radius:  8px 20px;
     color: var(--text-light);
-    border-radius: 8px;
+    /*border-radius: 8px;*/
     text-align: left;
     font-family: inherit;
     font-size: 0.9rem;
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s;
 }
+
+
 
 .nav-button:hover {
     background-color: var(--bg-button-hover);
@@ -113,7 +144,7 @@ body {
     border: none;
     background-color: var(--color-pink-red);
     color: var(--text-light);
-    border-radius: 12px;
+    border-radius:  8px 20px;
     font-family: inherit;
     font-size: 1rem;
     font-weight: 500;
@@ -123,14 +154,12 @@ body {
 }
 .reset-button:hover { opacity: 0.9 }
 
-
-
-/* --- Основной контент --- */
 .main-content {
     flex-grow: 1;
     padding: 20px 30px;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .content-header h2 {
@@ -165,6 +194,7 @@ body {
 .table-container {
     flex-grow: 1;
     overflow-y: auto;
+    border-radius: 8px;
 }
 .table-container::-webkit-scrollbar { width: 8px; }
 .table-container::-webkit-scrollbar-track { background: var(--sidebar-bg); }
@@ -189,6 +219,8 @@ thead th {
     position: sticky;
     top: 0;
     background-color: var(--bg-panel);
+    z-index: 10;
+
 }
 
 tbody tr {
@@ -240,16 +272,31 @@ tbody tr.selected {
     gap: 15px;
 }
 
-.add-button { background-color: var(--green-color); }
-.edit-button { background-color: var(--color-blue); }
-.delete-button { background-color: var(--color-pink-red); }
-.cancel-button { background-color: var(--gray-color)}
+.add-button {
+    background-color: var(--green-color);
+    border-radius:  8px 20px;
+    width: 220px;
+}
+.edit-button {
+    background-color: var(--color-blue);
+    border-radius:  8px 20px;
+    width: 220px;
+}
+.delete-button {
+    background-color: var(--color-pink-red);
+    border-radius:  8px 20px;
+    width: 220px;
+}
+.cancel-button {
+    background-color: var(--gray-color);
+    border-radius:  8px 20px;
+    width: 150px;
+}
 
 .hidden {
     display: none !important;
 }
 
-/* Стили для формы редактирования */
 .edit-form-container {
     display: flex;
     flex-direction: column;
@@ -286,13 +333,13 @@ tbody tr.selected {
     border-color: var(--bg-active);
 }
 
-/* Новый цвет для кнопки "Сохранить" */
 :root {
-    /* ... другие переменные ... */
     --color-green: #76b38f;
 }
 .save-button {
     background-color: var(--color-green);
+    border-radius:  8px 20px;
+    width: 200px;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
@@ -302,4 +349,93 @@ input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+.table-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    position: relative;
+    padding-right: var(--scrollbar-width);
+}
+
+thead th {
+    font-weight: 600;
+    color: #c0c0c0;
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-panel);
+    z-index: 10;
+    border-bottom: none;
+}
+
+thead th::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--border-color);
+}
+
+thead th:first-child {
+    border-top-left-radius: 8px;
+}
+
+thead th:last-child {
+    border-top-right-radius: 8px;
+}
+
+thead th:last-child::after {
+    width: calc(100% - 8px);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 14px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+thead th {
+    font-weight: 600;
+    color: #c0c0c0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+}
+
+.table-container::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+}
+
+.table-container::-webkit-scrollbar-track {
+    background-color: var(--bg-panel);
+    border-radius: 8px 8px 8px 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background-color: rgba(110, 110, 124, 0.7);
+    border-radius: 10px;
+    background-clip: content-box;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(136, 136, 136, 0.8);
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.table-container:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(110, 110, 124, 0.7);
+    border-color: transparent;
 }
