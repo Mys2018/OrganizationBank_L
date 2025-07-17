@@ -202,7 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
     document.querySelectorAll('.sidebar-nav .nav-button').forEach(button => {
         button.addEventListener('click', (e) => {
             const viewName = e.target.dataset.view;
