@@ -45,8 +45,14 @@ app.post('/api/transactions', transactionsController.createTransaction)
 app.put('/api/transactions/:id', transactionsController.putTransaction);
 app.delete('/api/transactions/:id', transactionsController.deleteTransaction);
 
+const host = '0.0.0.0';
 
-
-app.listen(port, () => {
-    console.log(`Сервер запущен на http://localhost:${port}`);
+// 77.221.137.36
+app.listen(port, host, () => {
+    console.log(`Сервер запущен и доступен в локальной сети.`);
+    console.log(`Для доступа с этого компьютера: http://localhost:${port}`);
+    console.log(`Для доступа с других устройств в сети: используйте IP-адрес этого компьютера.`);
 });
+// app.listen(port, () => {
+//     console.log(`Сервер запущен на http://localhost:${port}`);
+// });
