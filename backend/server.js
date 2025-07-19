@@ -14,6 +14,7 @@ const currencyController = require('../backend/Controllers/currencies.controller
 const customersController = require('../backend/Controllers/customers.controller')
 const exchangeRatesController  = require('../backend/Controllers/exchange_rates.controller')
 const transactionsController = require('../backend/Controllers/transactions.controller')
+const dataProcessingController = require('../backend/Controllers/report.controller'); // Импортируем новый контроллер
 
 // Счета
 app.get('/api/accounts', accountController.getAccounts);
@@ -44,6 +45,8 @@ app.get('/api/transactions/:id', transactionsController.getOneTransaction);
 app.post('/api/transactions', transactionsController.createTransaction)
 app.put('/api/transactions/:id', transactionsController.putTransaction);
 app.delete('/api/transactions/:id', transactionsController.deleteTransaction);
+// Отчет
+app.post('/api/process-financial-data', dataProcessingController.calculateAndStoreFinancialData);
 
 const host = '0.0.0.0';
 

@@ -440,3 +440,18 @@ thead th {
     border-color: transparent;
 }
 
+.welcome-logo {
+    height: 64px;
+    width: 64px;
+}
+
+.welcome-content {
+    display: flex;
+    flex-direction: column;
+    color: #c5c8cc;
+}
+
+.welcome-content h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+}

@@ -36,7 +36,6 @@ CREATE TABLE financial_data
     stored_funds_amount    DECIMAL(18, 2) NOT NULL DEFAULT '0',
     deposited_funds_amount DECIMAL(18, 2) NOT NULL DEFAULT '0',
     withdrawn_funds_amount DECIMAL(18, 2) NOT NULL DEFAULT '0'
-
 );
 
 -- Операции С7
@@ -77,6 +76,11 @@ ALTER TABLE
     transactions
     ADD CONSTRAINT fk_transactions_currency FOREIGN KEY (currency) REFERENCES currencies (currency);
 
+
+ALTER TABLE financial_data DROP CONSTRAINT financial_data_bank_branch_key;
+ALTER TABLE financial_data DROP CONSTRAINT financial_data_currency_key;
+ALTER TABLE financial_data DROP CONSTRAINT financial_data_year_key;
+CREATE UNIQUE INDEX financial_data_unique_idx ON financial_data (year, bank_branch, currency);
 -- Данные
 -- 1. Заполнение таблицы "Клиенты"
 INSERT INTO customers (passport_number, full_name, registration_address, date_of_birth, issuing_authority_code)
@@ -124,3 +128,19 @@ DROP TABLE exchange_rates CASCADE;
 DROP TABLE financial_data CASCADE;
 DROP TABLE transactions CASCADE;
 DROP TABLE accounts CASCADE;
+
+DROP TABLE IF EXISTS financial_data CASCADE;
+
+CREATE TABLE financial_data
+(
+    bank_id                SERIAL PRIMARY KEY,
+    bank_branch            VARCHAR(100)   NOT NULL,
+    currency               VARCHAR(50)    NOT NULL,
+    year                   INTEGER        NOT NULL,
+    stored_funds_amount    DECIMAL(18, 2) NOT NULL DEFAULT 0,
+    deposited_funds_amount DECIMAL(18, 2) NOT NULL DEFAULT 0,
+    withdrawn_funds_amount DECIMAL(18, 2) NOT NULL DEFAULT 0
+);
+
+CREATE UNIQUE INDEX financial_data_unique_idx ON financial_data (year, bank_branch, currency);
+-- ALTER TABLE financial_data ADD CONSTRAINT fk_financial_data_currency FOREIGN KEY (currency) REFERENCES currencies (currency);

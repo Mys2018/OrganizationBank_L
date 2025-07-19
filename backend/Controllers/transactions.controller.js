@@ -51,7 +51,6 @@ class TransactionsController{
             const {id} = req.params;
             const result = await pool.query('DELETE FROM transactions WHERE transaction_id = $1', [id]);
             if (result.rowCount === 0) {
-                // Исправляем текст сообщения
                 return res.status(404).send('Валюта с таким кодом не найдена');
             }
             res.status(204).send();

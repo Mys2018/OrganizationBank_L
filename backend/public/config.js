@@ -71,5 +71,19 @@ const appConfig = {
             { key: 'rate_date', label: 'Дата', type: 'date', readonly: true},
             { key: 'price', label: 'Цена в рублях', type: 'text'}
         ]
+    },
+    // Отчеты
+    financial_report: {
+        isReport: true,
+        title: 'Рассчитанные финансовые данные',
+        columns: [
+            { key: 'year', label: 'Год', type: 'number' },
+            { key: 'bank_branch', label: 'Отделение банка', type: 'text' },
+            { key: 'currency', label: 'Валюта', type: 'text' },
+            // ДОБАВЛЕНО/ИСПРАВЛЕНО
+            { key: 'stored_funds_amount', label: 'Хранимые средства (на начало года)', type: 'number' },
+            { key: 'deposited_funds_amount', label: 'Положено за год', type: 'number' },
+            { key: 'withdrawn_funds_amount', label: 'Снято за год', type: 'number' }
+        ]
     }
 };
